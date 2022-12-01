@@ -7,9 +7,9 @@ public class Calculator implements ActionListener {
     JFrame frame;  //tworzy ramkę
     JTextField textField; // deklaruje pole tekstowe
     JButton[] numberButtons=new JButton[10]; // deklaruje przyciski od 0 do 9
-    JButton[] functionButtons = new JButton[8];//tdeklaruje przyciski funkcjonalne (dodawanie, odejmowanie itd)
+    JButton[] functionButtons = new JButton[9];//tdeklaruje przyciski funkcjonalne (dodawanie, odejmowanie itd)
     JButton addButton, subButton, mulButton, divButton;//deklaruje przyciski (+, - itd)
-    JButton decButton, equButton, delButton, clrButton;// tdeklaruje przyciski (del, clear itd)
+    JButton decButton, equButton, delButton, clrButton, negButton; // tdeklaruje przyciski (del, clear itd)
     JPanel panel; //panel dla chronienia wszystkich przyciskow
 
     Font myFont = new Font("Ink Free", Font.BOLD, 30); //tworzy czcionke
@@ -36,6 +36,7 @@ public class Calculator implements ActionListener {
         equButton = new JButton("=");
         delButton = new JButton("Delete");
         clrButton = new JButton("Clear");
+        negButton = new JButton("(-)");
 
         //dodawania przyciskow do tablicy
         functionButtons[0] = addButton;
@@ -46,8 +47,9 @@ public class Calculator implements ActionListener {
         functionButtons[5] = equButton;
         functionButtons[6] = delButton;
         functionButtons[7] = clrButton;
+        functionButtons[8] = negButton;
 
-        for(int i=0;i<8;i++)
+        for(int i=0;i<9;i++)
         {
             functionButtons[i].addActionListener(this); // dodawanie detektora akcji
             functionButtons[i].setFont(myFont);
@@ -62,8 +64,9 @@ public class Calculator implements ActionListener {
             numberButtons[i].setFocusable(false);
         }
 
-        delButton.setBounds(50,430,145,50);
-        clrButton.setBounds(205,430,145,50);
+        negButton.setBounds(50,430,100,50);
+        delButton.setBounds(150,430,100,50);
+        clrButton.setBounds(250,430,100,50);
 
         panel= new JPanel(); //tworzenie nowego panelu gdzie beda sie znajdowac przyciski 1,2,3...
         panel.setBounds(50,100,300,300);//ustawienia pozycji, szerokosci i wysokosci dla tego panelu
@@ -89,6 +92,7 @@ public class Calculator implements ActionListener {
 
 
         frame.add(panel);
+        frame.add(negButton);
         frame.add(delButton);
         frame.add(clrButton);
         frame.add(textField); // wyswietlamy pole tekstowe
@@ -165,6 +169,12 @@ public class Calculator implements ActionListener {
             {
                 textField.setText(textField.getText()+string.charAt(i));
             }
+        }
+
+        if(e.getSource()==negButton){
+            double temp = Double.parseDouble(textField.getText());
+            temp*=-1;
+            textField.setText(String.valueOf(temp));
         }
 
     }
